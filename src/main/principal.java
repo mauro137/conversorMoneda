@@ -5,8 +5,6 @@ import javax.swing.JOptionPane;
 public class Principal {
 
 	public static void main(String[] args) {
-		
-		
 		String[] converter = { "Conversor de Moneda", "Conversor de Temperatura" };
 		String converterList = (String) JOptionPane.showInputDialog(null, "Seleccione un conversor", "Menu",
 				JOptionPane.DEFAULT_OPTION, null, converter, converter[0]);
@@ -14,7 +12,8 @@ public class Principal {
 		do {
 			if (converterList == "Conversor de Moneda") {
 				Conversor usuario = new Conversor();
-				usuario.convertirMoneda();
+				usuario.ChooseMoney();
+	
 				 continuar = Util.endQuestion();
 			} else {
 				Util.endMessage();

@@ -1,40 +1,53 @@
 package main;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Set;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 import javax.swing.JOptionPane;
 
-import jdk.jshell.execution.Util;
-
 public class Conversor {
-	// valores relativos a 1 peso blue paralelo al 06/09/2022
-	final BigDecimal dolares = new BigDecimal(0.00365);
-	final BigDecimal euros = new BigDecimal(0.00355);
-	final BigDecimal yenes = new BigDecimal(0.52109);
-	final BigDecimal wones = new BigDecimal(5.03755);
-	final BigDecimal libras = new BigDecimal(0.00318);
-	
-	String[] moneyConvertOptions = { "De Pesos a Dolar", "De Pesos a Euro", "De Pesos a Libras", "De Pesos a Yen",
-			"De Pesos a Won Coreano", "De Dolar a Pesos", "De Euro a Pesos", "De Yen a Pesos", "De Won a Pesos",
-			"De Libra a Pesos" };
+	HashMap<String, Double> map = new HashMap<>();
+	HashMap<String, Double> map2 = new HashMap<>();
 
 	public Conversor() {
 
 	}
-	protected void convertirMoneda() {
-		BigDecimal valor = new BigDecimal(0);
+
+	protected void ChooseMoney() {
+		double monto = 0;
 		boolean repeat;
-		String ToConvert = (String) JOptionPane.showInputDialog(null, "Seleccione Moneda a convertir", "Menu",
-				JOptionPane.DEFAULT_OPTION, null, moneyConvertOptions, moneyConvertOptions[0]);
-		if (ToConvert == null) {
+		// valor primer input, cuanto n hay en 1 dolar
+		map.put("dolares", 1.00);
+		map.put("pesos", 0.0037);
+		map.put("euros", 1.02);
+		map.put("yenes", 0.0070);
+		map.put("wones", 0.00072);
+		map.put("libras", 1.16);
+		// valor segundo input, cuantos dolares hay en 1 n
+		map2.put("dolares", 1.00);
+		map2.put("pesos", 272.00);
+		map2.put("euros", 0.99);
+		map2.put("yenes", 142.51);
+		map2.put("wones", 1380.06);
+		map2.put("libras", 0.86);
+
+		String[] key = map.keySet().toArray(new String[0]);
+		System.out.println(Arrays.toString(key));
+
+		String money = (String) JOptionPane.showInputDialog(null, "Seleccione su moneda", "Menu",
+				JOptionPane.DEFAULT_OPTION, null, key, key[0]);
+		if (money == null) {
 			main.Util.endMessage();
 			System.exit(0);
 		}
-			do {
+		double firstMoney = map.get(money);
+		do {
 			try {
 				String value = JOptionPane.showInputDialog("Ingresar monto (solo numeros)");
-				valor = BigDecimal.valueOf(Double.valueOf(value));
+				monto = Double.parseDouble(value);
 				repeat = false;
 
 			} catch (NullPointerException exc) {
@@ -50,66 +63,18 @@ public class Conversor {
 
 		} while (repeat);
 
-		switch (ToConvert) {
-		case "De Pesos a Dolar":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.multiply(dolares).setScale(2, RoundingMode.HALF_EVEN) + " dolares");
-			break;
+		String money2 = (String) JOptionPane.showInputDialog(null, "A que moneda desea convertir?", "Menu",
+				JOptionPane.DEFAULT_OPTION, null, key, key[0]);
+		if (money2 == null) {
+			main.Util.endMessage();
+			System.exit(0);
 		}
-		switch (ToConvert) {
-		case "De Pesos a Euro":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.multiply(euros).setScale(2, RoundingMode.HALF_EVEN) + " euros");
-			break;
-		}
-		switch (ToConvert) {
-		case "De Pesos a Yen":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.multiply(yenes).setScale(2, RoundingMode.HALF_EVEN) + " yenes");
-			break;
-		}
-		switch (ToConvert) {
-		case "De Pesos a Won Coreano":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.multiply(wones).setScale(2, RoundingMode.HALF_EVEN) + " wones coreanos");
-			break;
-		}
-		switch (ToConvert) {
-		case "De Pesos a Libras":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.multiply(libras).setScale(2, RoundingMode.HALF_EVEN) + " libras");
-			break;
-		}
-		switch (ToConvert) {
-		case "De Dolar a Pesos":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.divide(dolares, 2, RoundingMode.HALF_EVEN) + " pesos");
-			break;
-		}
-		switch (ToConvert) {
-		case "De Euro a Pesos":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.divide(euros, 2, RoundingMode.HALF_EVEN) + " pesos");
-			break;
-		}
-		switch (ToConvert) {
-		case "De Yen a Pesos":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.divide(yenes, 2, RoundingMode.HALF_EVEN) + " pesos");
-			break;
-		}
-		switch (ToConvert) {
-		case "De Won a Pesos":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.divide(wones, 2, RoundingMode.HALF_EVEN) + " pesos");
-			break;
-		}
-		switch (ToConvert) {
-		case "De Libra a Pesos":
-			JOptionPane.showMessageDialog(null,
-					"Tienes $ " + valor.divide(libras, 2, RoundingMode.HALF_EVEN) + " pesos");
-			break;
-		}
+		double secondMoney = map.get(money2);
+		double resultado = (monto * firstMoney) * secondMoney;
+		JOptionPane.showMessageDialog(null, "Usted tiene $" + resultado, "System Message", JOptionPane.WARNING_MESSAGE);
+		// hay que redondear el resultado con big decimal
+		// hay que conseguir get clave del segundo input para imprimir
+
 	}
 
 }
