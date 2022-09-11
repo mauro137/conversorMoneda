@@ -1,5 +1,4 @@
 package main;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -10,9 +9,9 @@ public class Conversor {
 	HashMap<String, Double> map2 = new HashMap<>();
 
 	public Conversor() {
-
 	}
-
+	
+	
 	protected void ChooseMoney() {
 		double monto = 0;
 		boolean repeat;
@@ -32,8 +31,7 @@ public class Conversor {
 		map2.put("libras", 0.86);
 
 		String[] key = map.keySet().toArray(new String[0]);
-		System.out.println(Arrays.toString(key));
-
+	
 		// seleccionar moneda, si cancela se cierra el programa
 		String money = (String) JOptionPane.showInputDialog(null, "Seleccione su moneda", "Menu",
 				JOptionPane.DEFAULT_OPTION, null, key, key[0]);
@@ -44,6 +42,7 @@ public class Conversor {
 
 		// ingresar monto, no permite espacios, nulos o caracteres especiales
 		double firstMoney = map.get(money);
+		
 		do {
 			try {
 				String value = JOptionPane.showInputDialog("Ingresar monto (solo numeros)");
