@@ -13,14 +13,13 @@ public class Principal {
 			if (converterList == "Conversor de Moneda") {
 				Conversor usuario = new Conversor();
 				usuario.ChooseMoney();
-	
 				 continuar = Util.endQuestion();
 			} else {
-				Util.endMessage();
+				Util.exitMessage();
 				// instanciar clase
 				// ejecutar metodo
 			}
-		
+			
 		} while (continuar); 
 
 	}
